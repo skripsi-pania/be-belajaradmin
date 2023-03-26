@@ -1,61 +1,47 @@
 const express = require("express");
 const router = express.Router();
 //kita panggil webtoken okeee
-const jwt = require("jsonwebtoken");
 
 const users = [
-  { id: 1, nama: "Vania", email: "sk080501@gmail.com", password: "123" },
-  { id: 2, nama: "Iqbal", email: "iqbal@gmail.com", password: "123" },
+  {
+    message: "success get data",
+    data: [
+      {
+        _id: "6387735c2b0ac0b6e184846f",
+        username: "febe11",
+        email: "febe11@gmail.com",
+        password:
+          "$2a$08$xyjqQr5mPrJ0boat0IX69.DZKZgXtrC9L7zr/bCoiWvSZj7Z3x7Qi",
+        roles: ["63876e9ff672199d9a7a61e6"],
+        posts: [],
+        __v: 1,
+      },
+      {
+        _id: "63899588a9e80d4a347f2f6d",
+        username: "vania",
+        email: "vania@gmail.com",
+        password:
+          "$2a$08$55R7GEXuSKgbiKV11bKhI.B5LQrsGFp7cY2MI82DsMcjmPHmN485q",
+        roles: ["63876e9ff672199d9a7a61e5"],
+        __v: 1,
+      },
+      {
+        _id: "638999eca9e80d4a347f2fa4",
+        username: "ilham",
+        email: "ilham@gmail.com",
+        password:
+          "$2a$08$3x3pqm8.LTiwzljv1jErouLfpxyvnPmQgvsLfStALMjW3uvEVdjRi",
+        roles: ["63876e9ff672199d9a7a61e5"],
+        __v: 1,
+      },
+    ],
+  },
 ];
 
-const KEY = "secretkey";
-router.get("/login", (req, res) => {
+router.get("/admin", (req, res) => {
   res.send("hello world");
   res.send(users);
   console.log(users);
-});
-// http://localhost:3000/auth/login
-router.post("/login", (req, res) => {
-  // const data = req.body; // ini cara pertama 1*
-  const { email, password } = req.body; //ini cara ke-dua
-  //   console.log("Data berhasil ditambahkan ", data);
-
-  // check kondisi email/password incorrect atau tidak
-  // data.email itudari input body Thunder ya, item.email itu dari data yang di dalem const users = ...
-  const userData = users.find(
-    // (item) => data.email === item.email && data.password === item.password // ini untuk cara pertama dri baris 12
-    (item) => email === item.email && password === item.password // ini untuk cara kedua dri baris 13
-  );
-
-  //setelah panggil webtoken, kita bkin token jwt nya
-  // const tokenn = jwt.sign({ email }, KEY); // cara 1 mudah
-  const tokenn = jwt.sign(
-    {
-      id: userData.id,
-      email: userData.email,
-    },
-    KEY,
-    { expiresIn: "2m" }
-  );
-
-  if (userData) {
-    return res.json({
-      message: "success login",
-      token: tokenn,
-    });
-  }
-
-  res.statusCode = 401;
-  return res.json({
-    message: "email atau password salah",
-  });
-});
-
-// http:localhost:3000/auth/register
-router.post("/register", (req, res) => {
-  res.json({
-    message: "success register",
-  });
 });
 
 module.exports = router;
